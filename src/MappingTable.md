@@ -12,6 +12,7 @@ array                  | 陣列                          | 參考：[維基百�
 assignment             | 賦值                          |
 associated function    | 關聯函式                      |
 best-practice          | 最佳做法                      |
+binding                | 綁定                          | 
 bit                    | 位元                          | 參考：[維基百科][bit]
 block                  | 區塊                          |
 boolean                | 布林                          | 參考：[維基百科][boolean]
@@ -46,6 +47,7 @@ fault                  | 錯誤                          |
 formalization          | 正規化                        |
 function               | 函式                          | 參考：[維基百科][function]
 generics               | 泛型                          | 參考：[維基百科][generics]
+inline (v.)            | 行內代換                      |
 instance               | 實體                          |
 iterative              | 疊代                          | 參考：[維基百科][iterative]
 iterator               | 疊代器                        | 參考：[維基百科][iterator]

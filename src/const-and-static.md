@@ -1,38 +1,30 @@
-% `const` and `static`
+# `const` 與`static`
 
-Rust has a way of defining constants with the `const` keyword:
+Rust 有個方法可以利用 `const` 關鍵字宣告常數 (constant)：
 
 ```rust
 const N: i32 = 5;
 ```
 
-Unlike [`let`][let] bindings, you must annotate the type of a `const`.
+不同於 [`let`][let] 綁定, 你必須註釋一個 `const` 的型別。
 
 [let]: variable-bindings.html
 
-Constants live for the entire lifetime of a program. More specifically,
-constants in Rust have no fixed address in memory. This is because they’re
-effectively inlined to each place that they’re used. References to the same
-constant are not necessarily guaranteed to refer to the same memory address for
-this reason.
+常數在整個程式的生命週期都活著。精確來說，Rust 的常數在記憶體中並沒有固定的地址。這是因為他們實際上在每個被使用的位置都被行內代換 (inlined) 了。因此，指到同一個常數的參考 (reference) 並不保證會指到同一個記憶體位置。
 
 # `static`
 
-Rust provides a ‘global variable’ sort of facility in static items. They’re
-similar to constants, but static items aren’t inlined upon use. This means that
-there is only one instance for each value, and it’s at a fixed location in
-memory.
+Rust 提供了一個類似於全域變數 (global variable) 的機制稱為靜態 (static)。它們類似於常數，但是靜態物件在使用時並沒有被行內代換。這表示每個值只有一個實體，而且它在記憶體中有固定地址。
 
-Here’s an example:
+以下是一個範例：
 
 ```rust
 static N: i32 = 5;
 ```
 
-Unlike [`let`][let] bindings, you must annotate the type of a `static`.
+不同於 [`let`][let] 綁定, 你必須註釋 `static` 的型別。
 
-Statics live for the entire lifetime of a program, and therefore any
-reference stored in a constant has a [`'static` lifetime][lifetimes]:
+靜態物件在整個程式的生命週期都活著，所以一個儲存在常數 (譯註：原作者疑似是將 static 誤植為 constant) 內的參照都必須有靜態生命週期 ([`'static` lifetime][lifetimes])：
 
 ```rust
 static NAME: &'static str = "Steve";
@@ -40,17 +32,15 @@ static NAME: &'static str = "Steve";
 
 [lifetimes]: lifetimes.html
 
-## Mutability
+## 可變性
 
-You can introduce mutability with the `mut` keyword:
+你可以使用 `mut` 關鍵字來引入可變性：
 
 ```rust
 static mut N: i32 = 5;
 ```
 
-Because this is mutable, one thread could be updating `N` while another is
-reading it, causing memory unsafety. As such both accessing and mutating a
-`static mut` is [`unsafe`][unsafe], and so must be done in an `unsafe` block:
+因為 N 成為可變的，當一個執行緒在讀取 N 的時候，可能有令一個執行緒正在寫入，造成記憶體的不安全。因此不論讀取或寫入一個 `static mut` 都是不安全的 ([`unsafe`][unsafe])，必須要把它們放在 `unsafe` 區塊中。
 
 ```rust
 # static mut N: i32 = 5;
@@ -64,23 +54,16 @@ unsafe {
 
 [unsafe]: unsafe.html
 
-Furthermore, any type stored in a `static` must be `Sync`, and may not have
-a [`Drop`][drop] implementation.
+此外，任何存在 `static` 的型別都必須是 `Sync`, 而且不能實作 [`Drop`][drop]。
 
 [drop]: drop.html
 
-# Initializing
+# 初始化
 
-Both `const` and `static` have requirements for giving them a value. They may
-only be given a value that’s a constant expression. In other words, you cannot
-use the result of a function call or anything similarly complex or at runtime.
+`const` 與 `static` 都需要被指定一個值。他們只能被指定一個常數值。換句話說，你不能把一個函數的回傳值或類似複雜的值指定給它們，也不能在程式執行時指定。
 
-# Which construct should I use?
+# 我應該使用哪一個？
 
-Almost always, if you can choose between the two, choose `const`. It’s pretty
-rare that you actually want a memory location associated with your constant,
-and using a const allows for optimizations like constant propagation not only
-in your crate but downstream crates.
-
+大多數時候，如果你可以在兩者之中選擇，請選擇 `const`。您很少會需要讓您的常數有固定的記憶體地址，因此藉由使用常數可以讓編譯器進行最佳化，例如讓常數不只在你的 crate 中傳遞，還能傳遞到下游的 crate。
 
 > *commit 9eda98a*
