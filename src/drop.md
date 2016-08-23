@@ -1,8 +1,6 @@
-% Drop
+% 丟棄
 
-Now that we’ve discussed traits, let’s talk about a particular trait provided
-by the Rust standard library, [`Drop`][drop]. The `Drop` trait provides a way
-to run some code when a value goes out of scope. For example:
+基於我們已經討論過特征了，現在讓我們一起來了解由Rust語言標準庫提供的特殊的特征——[`Drop`(丟棄)][drop]。 丟棄的特征是由一個值離開作用域時觸發的方法，譬如說：
 
 [drop]: ../std/ops/trait.Drop.html
 
@@ -23,13 +21,9 @@ fn main() {
 } // x goes out of scope here
 ```
 
-When `x` goes out of scope at the end of `main()`, the code for `Drop` will
-run. `Drop` has one method, which is also called `drop()`. It takes a mutable
-reference to `self`.
+當變量 `x` 離開它的作用域 `main()`的底部的時候, 丟棄`Drop`的代碼就被觸發了. 丟棄`Drop`有一個方法也被寫作 `drop()`。它用來回去一個自身 `self`的可變引用。
 
-That’s it! The mechanics of `Drop` are very simple, but there are some
-subtleties. For example, values are dropped in the opposite order they are
-declared. Here’s another example:
+嗚呼！ 丟棄`Drop` 的運行原理非常簡單。只是還有一些細節問題：譬如說值會被它們聲明的相反順序觸發丟棄的過程，譬如說：
 
 ```rust
 struct Firework {
