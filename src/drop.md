@@ -48,21 +48,16 @@ fn main() {
 }
 ```
 
-This will output:
+輸出結果：
 
 ```text
 BOOM times 100!!!
 BOOM times 1!!!
 ```
 
-The TNT goes off before the firecracker does, because it was declared
-afterwards. Last in, first out.
+由於TNT在firecracker之後被聲明，所以TNT在firecracker之前離開作用域。
 
-So what is `Drop` good for? Generally, `Drop` is used to clean up any resources
-associated with a `struct`. For example, the [`Arc<T>` type][arc] is a
-reference-counted type. When `Drop` is called, it will decrement the reference
-count, and if the total number of references is zero, will clean up the
-underlying value.
+那麼 `Drop` 有什麼好處呢？通常情況下 `Drop` 被用來清理和 `struct` 關聯得到資源. 譬如說[`Arc<T>` 型別][arc]是一個引用計數型別。當 `Drop` 被調用的時候，它就會減少引用計數。此外，如果引用的總數為零，底層的值將會被擦除。
 
 [arc]: ../std/sync/struct.Arc.html
 
