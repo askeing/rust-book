@@ -1,20 +1,16 @@
-% `const` and `static`
+% 常量與靜態量
 
-Rust has a way of defining constants with the `const` keyword:
+在Rust語言中定義常量可以使用 `const` 關鍵字:
 
 ```rust
 const N: i32 = 5;
 ```
 
-Unlike [`let`][let] bindings, you must annotate the type of a `const`.
+你必須明確一個 `const` 的數據類型，這和使用 [`let`][let] 關鍵字進行綁定並不相同。
 
 [let]: variable-bindings.html
 
-Constants live for the entire lifetime of a program. More specifically,
-constants in Rust have no fixed address in memory. This is because they’re
-effectively inlined to each place that they’re used. References to the same
-constant are not necessarily guaranteed to refer to the same memory address for
-this reason.
+常量作用於整個程式的生命週期。實際上，在Rust語言中常量在在內存中並沒有確定的地址，它們會被內聯到所有被使用的地方。因此對於同一個常量的引用並不能確保您引用的是同一個內存地址內的數據。
 
 # `static`
 
@@ -23,7 +19,7 @@ similar to constants, but static items aren’t inlined upon use. This means tha
 there is only one instance for each value, and it’s at a fixed location in
 memory.
 
-Here’s an example:
+這裡有一道例題：
 
 ```rust
 static N: i32 = 5;
