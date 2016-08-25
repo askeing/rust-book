@@ -29,7 +29,7 @@
     * [Closures](closures.md)
     * [Universal Function Call Syntax](ufcs.md)
     * [Crates and Modules](crates-and-modules.md)
-    * [`const` and `static`](const-and-static.md)
+    * [常數與靜態變數](const-and-static.md)
     * [Attributes](attributes.md)
     * [`type` aliases](type-aliases.md)
     * [Casting between types](casting-between-types.md)
