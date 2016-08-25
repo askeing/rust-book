@@ -1,21 +1,16 @@
-% The Stack and the Heap
+% 堆疊與堆積
 
-As a systems language, Rust operates at a low level. If you’re coming from a
-high-level language, there are some aspects of systems programming that you may
-not be familiar with. The most important one is how memory works, with a stack
-and a heap. If you’re familiar with how C-like languages use stack allocation,
-this chapter will be a refresher. If you’re not, you’ll learn about this more
-general concept, but with a Rust-y focus.
+Rust語言是一個在底層運轉的系統語言。如果您只學習過高級語言則可能不太熟悉這方面的內容。
+使用堆疊和堆積是內存工作的一個最重要的途徑。如果您熟知那些和C語言相似的程式語言的話
+這一章的內容講更新您對堆疊和堆積的認識。如果您還不了解這部分的內容，本章將會帶您以
+Rust語言的視角來了解它們。
 
-As with most things, when learning about them, we’ll use a simplified model to
-start. This lets you get a handle on the basics, without getting bogged down
-with details which are, for now, irrelevant. The examples we’ll use aren’t 100%
-accurate, but are representative for the level we’re trying to learn at right
-now. Once you have the basics down, learning more about how allocators are
-implemented, virtual memory, and other advanced topics will reveal the leaks in
-this particular abstraction.
+和平常一樣，我們將會通過一個簡明的模型來著手學習它們。這是為了讓您著手基礎知識
+而不是糾結那些目前而言無關緊要的細節。這個例子並不是絕對的準確無誤。
+它只代表我們現在正在學習的水準。一旦您掌握了這些基礎知識之後，
+學習更多有關於分配器實現、虛擬內存以及其他高級話題將會揭示特定抽象的洩漏。
 
-# Memory management
+# 內存管理
 
 These two terms are about memory management. The stack and the heap are
 abstractions that help you determine when to allocate and deallocate memory.
@@ -27,7 +22,7 @@ But the allocation is local to a function call, and is limited in size. The
 heap, on the other hand, is slower, and is explicitly allocated by your
 program. But it’s effectively unlimited in size, and is globally accessible.
 
-# The Stack
+# 堆疊
 
 Let’s talk about this Rust program:
 
@@ -196,7 +191,7 @@ And then `bold()` ends, leaving only `main()`:
 And then we’re done. Getting the hang of it? It’s like piling up dishes: you
 add to the top, you take away from the top.
 
-# The Heap
+# 堆積
 
 Now, this works pretty well, but not everything can work like this. Sometimes,
 you need to pass some memory between different functions, or keep it alive for
