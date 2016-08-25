@@ -26,6 +26,7 @@ concurrency            | 並行                          | 參考：[維基百�
 conditional            | 條件運算                      | 參考：[維基百科][conditional]
 configuration          | 配置                          |
 constant               | 常數                          | 參考：[維基百科][constant]
+constant propagation   | 常熟傳播                      | 參考：[維基百科][constant propagation]
 constructor            | 建構子                        |
 crash                  | 當機                          |
 dangling pointer       | 迷途指標                      | 參考：[維基百科][dangling pointer]
@@ -91,6 +92,7 @@ signed integer         | 帶號整數                      | 參考：[維基百
 square bracket         | 方括號                        | 參考：[維基百科][bracket]
 stack                  | 堆疊                          | 參考：[維基百科][stack]
 statements             | 陳述式                        |
+static                 | 靜態變數                      | 參考：[維基百科][static]
 string                 | 字串                          | 參考：[維基百科][string]
 string interpolation   | 字串插值                      | 參考：[MSDN][string interpolation]
 struct                 | 結構體                        | 參考：[維基百科][struct]、[維基百科][struct_2]
@@ -126,6 +128,7 @@ zero-cost abstractions | 無成本抽象化                  |
 [concurrency]: https://zh.wikipedia.org/zh-tw/%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97
 [conditional]: https://zh.wikipedia.org/zh-tw/%E6%A2%9D%E4%BB%B6%E9%81%8B%E7%AE%97%E5%BC%8F
 [constant]: https://zh.wikipedia.org/zh-tw/%E5%B8%B8%E6%95%B0
+[constant propagation]: https://zh.wikipedia.org/zh-tw/%E5%B8%B8%E6%95%B8%E6%8A%98%E7%96%8A
 [dangling pointer]: https://zh.wikipedia.org/zh-tw/%E8%BF%B7%E9%80%94%E6%8C%87%E9%92%88
 [enumerate]: https://zh.wikipedia.org/zh-tw/%E6%9E%9A%E4%B8%BE
 [handle]: https://zh.wikipedia.org/zh-tw/%E5%8F%A5%E6%9F%84
@@ -161,6 +164,7 @@ zero-cost abstractions | 無成本抽象化                  |
 [segment]: https://zh.wikipedia.org/zh-tw/%E8%A8%98%E6%86%B6%E9%AB%94%E5%88%86%E6%AE%B5
 [segmentation fault]: https://zh.wikipedia.org/zh-tw/%E8%A8%98%E6%86%B6%E9%AB%94%E5%8D%80%E6%AE%B5%E9%8C%AF%E8%AA%A4
 [stack]: https://zh.wikipedia.org/zh-tw/%E5%A0%86%E6%A0%88
+[static]: https://zh.wikipedia.org/zh-tw/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F
 [string]: https://zh.wikipedia.org/zh-tw/%E5%AD%97%E7%AC%A6%E4%B8%B2
 [string interpolation]: https://msdn.microsoft.com/zh-tw/library/dn961160.aspx
 [struct]: https://zh.wikipedia.org/zh-tw/C%2B%2B%E7%B1%BB
