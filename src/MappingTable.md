@@ -26,7 +26,7 @@ concurrency            | 並行                          | 參考：[維基百�
 conditional            | 條件運算                      | 參考：[維基百科][conditional]
 configuration          | 配置                          |
 constant               | 常數                          | 參考：[維基百科][constant]
-constant propagation   | 常熟傳播                      | 參考：[維基百科][constant propagation]
+constant propagation   | 常數傳播                      | 參考：[維基百科][constant propagation]
 constructor            | 建構子                        |
 crash                  | 當機                          |
 dangling pointer       | 迷途指標                      | 參考：[維基百科][dangling pointer]
