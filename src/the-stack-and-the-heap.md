@@ -1,14 +1,15 @@
 % 堆疊與堆積
 
 Rust語言是一個在底層運轉的系統語言。如果您只學習過高級語言則可能不太熟悉這方面的內容。
-使用堆疊和堆積是內存工作的一個最重要的途徑。如果您熟知那些和C語言相似的程式語言的話
-這一章的內容講更新您對堆疊和堆積的認識。如果您還不了解這部分的內容，本章將會帶您以
-Rust語言的視角來了解它們。
+使用堆疊和堆積是內存工作的一個最重要的途徑。
+如果您熟知那些和C語言相似的程式語言的話這一章的內容講更新您對堆疊和堆積的認識。
+如果您還不了解這部分的內容，本章將會帶您以 Rust 語言的視角來了解它們。
 
-和平常一樣，我們將會通過一個簡明的模型來著手學習它們。這是為了讓您著手基礎知識
-而不是糾結那些目前而言無關緊要的細節。這個例子並不是絕對的準確無誤。
-它只代表我們現在正在學習的水準。一旦您掌握了這些基礎知識之後，
-學習更多有關於分配器實現、虛擬內存以及其他高級話題將會揭示特定抽象的洩漏。
+和平常一樣，我們將會通過一個簡明的模型來著手學習它們。
+這是為了讓您著手基礎知識而不是糾結那些目前而言無關緊要的細節。
+這個例子並不是絕對的準確無誤。它只代表我們現在正在學習的水準。
+一旦您掌握了這些基礎之後，學習了更多有關於分配器的實作、
+虛擬記憶體、以及其他進階的主題，將會揭露出這些特定的抽象概念。 
 
 # 內存管理
 
@@ -84,7 +85,7 @@ number comes from 2<sup>30</sup>, the number of bytes in a gigabyte. [^gigabyte]
 This memory is kind of like a giant array: addresses start at zero and go
 up to the final number. So here’s a diagram of our first stack frame:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | 0       | x    | 42    |
 
@@ -92,7 +93,7 @@ We’ve got `x` located at address `0`, with the value `42`.
 
 When `foo()` is called, a new stack frame is allocated:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | 2       | z    | 100   |
 | 1       | y    | 5     |
@@ -111,7 +112,7 @@ value being stored.
 
 After `foo()` is over, its frame is deallocated:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | 0       | x    | 42    |
 
@@ -148,13 +149,13 @@ We have some kooky function names to make the diagrams clearer.
 
 Okay, first, we call `main()`:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | 0       | x    | 42    |
 
 Next up, `main()` calls `bold()`:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | **3**   | **c**|**1**  |
 | **2**   | **b**|**100**|
@@ -163,7 +164,7 @@ Next up, `main()` calls `bold()`:
 
 And then `bold()` calls `italic()`:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | *4*     | *i*  | *6*   |
 | **3**   | **c**|**1**  |
@@ -175,7 +176,7 @@ Whew! Our stack is growing tall.
 After `italic()` is over, its frame is deallocated, leaving only `bold()` and
 `main()`:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | **3**   | **c**|**1**  |
 | **2**   | **b**|**100**|
@@ -184,7 +185,7 @@ After `italic()` is over, its frame is deallocated, leaving only `bold()` and
 
 And then `bold()` ends, leaving only `main()`:
 
-| 地址    | Name | Value |
+| 位址    | Name | Value |
 |---------|------|-------|
 | 0       | x    | 42    |
 
@@ -211,7 +212,7 @@ fn main() {
 
 Here’s what happens in memory when `main()` is called:
 
-| 地址    | Name | Value  |
+| 位址    | Name | Value  |
 |---------|------|--------|
 | 1       | y    | 42     |
 | 0       | x    | ?????? |
@@ -223,7 +224,7 @@ on the heap. The actual value of the box is a structure which has a pointer to
 it allocates some memory for the heap, and puts `5` there. The memory now looks
 like this:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 5                      |
 | ...                  | ...  | ...                    |
@@ -248,7 +249,7 @@ freed in any order, it can end up with ‘holes’. Here’s a diagram of the me
 layout of a program which has been running for a while now:
 
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 5                      |
 | (2<sup>30</sup>) - 2 |      |                        |
@@ -277,7 +278,7 @@ implementation of `Drop` for `Box` deallocates the memory that was allocated
 when it was created. Great! So when `x` goes away, it first frees the memory
 allocated on the heap:
 
-| 地址    | Name | Value  |
+| 位址    | Name | Value  |
 |---------|------|--------|
 | 1       | y    | 42     |
 | 0       | x    | ?????? |
@@ -310,7 +311,7 @@ fn main() {
 
 When we enter `main()`, memory looks like this:
 
-| 地址    | Name | Value  |
+| 位址    | Name | Value  |
 |---------|------|--------|
 | 1       | y    | → 0    |
 | 0       | x    | 5      |
@@ -320,7 +321,7 @@ memory location that `x` lives at, which in this case is `0`.
 
 What about when we call `foo()`, passing `y` as an argument?
 
-| 地址    | Name | Value  |
+| 位址    | Name | Value  |
 |---------|------|--------|
 | 3       | z    | 42     |
 | 2       | i    | → 0    |
@@ -372,7 +373,7 @@ fn main() {
 
 First, we call `main()`:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | ...                  | ...  | ...                    |
@@ -385,7 +386,7 @@ value pointing there.
 
 Next, at the end of `main()`, `foo()` gets called:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | ...                  | ...  | ...                    |
@@ -402,7 +403,7 @@ since `j` points at `h`.
 
 Next, `foo()` calls `baz()`, passing `z`:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | ...                  | ...  | ...                    |
@@ -418,7 +419,7 @@ Next, `foo()` calls `baz()`, passing `z`:
 We’ve allocated memory for `f` and `g`. `baz()` is very short, so when it’s
 over, we get rid of its stack frame:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | ...                  | ...  | ...                    |
@@ -431,7 +432,7 @@ over, we get rid of its stack frame:
 
 Next, `foo()` calls `bar()` with `x` and `z`:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | (2<sup>30</sup>) - 2 |      | 5                      |
@@ -454,7 +455,7 @@ case, we set up the variables as usual.
 
 At the end of `bar()`, it calls `baz()`:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | (2<sup>30</sup>) - 2 |      | 5                      |
@@ -478,7 +479,7 @@ far.
 
 After `baz()` is over, we get rid of `f` and `g`:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | (2<sup>30</sup>) - 2 |      | 5                      |
@@ -498,7 +499,7 @@ After `baz()` is over, we get rid of `f` and `g`:
 Next, we return from `bar()`. `d` in this case is a `Box<T>`, so it also frees
 what it points to: (2<sup>30</sup>) - 2.
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | ...                  | ...  | ...                    |
@@ -511,7 +512,7 @@ what it points to: (2<sup>30</sup>) - 2.
 
 And after that, `foo()` returns:
 
-| 地址                 | Name | Value                  |
+| 位址                 | Name | Value                  |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 20                     |
 | ...                  | ...  | ...                    |
