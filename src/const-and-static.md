@@ -76,11 +76,10 @@ unsafe {
 
 >  譯者注：Rust語言中的常量相當於C語言中的#define (參考：[rust-lang/rust#36039](https://github.com/rust-lang/rust/issues/36039) )
 
-crate這個詞我們還沒有決定到底要不要翻譯，一些漢譯本中把它翻譯為箱。這看起來是好的
+
+> crate這個詞我們還沒有決定到底要不要翻譯，一些漢譯本中把它翻譯為箱。這看起來是好的
 ，可是漢語中的箱和Rust中說的crate又不完全是相同的意思。不過像Java語言中的package翻譯成包已
 經能夠被接受了。Rust語言中的crate和Java語言中的package是類似的。
 
 
-
---------------------
 > *commit 9eda98a*
