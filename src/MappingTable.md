@@ -43,6 +43,7 @@ expression-oriented    | 表達式導向                    |
 expression statements  | 表達陳述式                    |
 extensions             | 擴充功能                      |
 handle                 | 控制代碼                      | 參考：[維基百科][handle]、[MSDN][handle_2]
+hash                   | 哈希/散列                     |
 heap                   | 堆積                          | 參考：[維基百科][heap]
 fault                  | 錯誤                          |
 formalization          | 正規化                        |
@@ -58,6 +59,8 @@ inheritance            | 繼承　                        |
 language feature       | 語言特徵                      | 參考：[中華民國資訊學會][language feature]
 library                | 函式庫                        | 參考：[維基百科][library]
 lifetimes              | 生命週期                      |
+linker                 | 連接器                        |
+linking                | 連接                          |
 loop                   | 迴圈、循環                    | 參考：[維基百科][loop]
 macro                  | 巨集                          | 參考：[維基百科][macro]
 main function          | 主函式                        | 參考：[維基百科][main function]
@@ -81,6 +84,7 @@ pointer                | 指標                          | 參考：[維基百�
 polymorphism           | 多型                          | 參考：[維基百科][polymorphism]
 primitive type         | 基本型別                      | 參考：[維基百科][primitive type]
 reference              | 參照、參考                    | 參考：[維基百科][reference]
+root                   | 根                            |
 round bracket          | 圓括號                        | 參考：[維基百科][bracket]
 scope                  | 有效範圍                      |
 semantics              | 語意                          |
@@ -88,6 +92,7 @@ segment                | 區段                          | 參考：[維基百�
 segmentation fault     | 記憶體區段錯誤                | 參考：[維基百科][segmentation fault]
 shadowing              | 遮蔽                          |
 signed integer         | 帶號整數                      | 參考：[維基百科][integer]
+shell                  | shell命令                     |
 square bracket         | 方括號                        | 參考：[維基百科][bracket]
 stack                  | 堆疊                          | 參考：[維基百科][stack]
 statements             | 陳述式                        |
@@ -188,10 +193,7 @@ crates                 |                               |
 dependencies           |                               |
 destructuring let      |                               | 用於存取 tuple
 fully-strict           |                               |
-hash                   |                               |
 import                 |                               |
-linker                 |                               |
-linking                |                               |
 master                 |                               | git branch
 mata                   |                               |
 metaprogramming        |                               |
@@ -203,8 +205,6 @@ prelude                |                               | 預先載入的函式�
 profiles               |                               |
 regression             |                               |
 repository             |                               |
-root                   |                               |
-shell                  |                               |
 slices                 |                               | 其他資料結構的參考
 tabs                   |                               |
 target triple          |                               |
