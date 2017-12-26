@@ -1,27 +1,23 @@
-% Crates and Modules
+# Crates 和 Modules
 
-When a project starts getting large, it’s considered good software
-engineering practice to split it up into a bunch of smaller pieces, and then
-fit them together. It is also important to have a well-defined interface, so
-that some of your functionality is private, and some is public. To facilitate
-these kinds of things, Rust has a module system.
+當一個專案開始變大的時候，將它切小再把他們組裝在一起會被認為是個好的軟體工程作法。
+有個定義得很好的介面也很重要，這麼做的話你就可以將某些 functionality 區分成公開及私有的。
+為了滿足上述的需求，Rust 便提供了模組系統 (module system)。
 
-# Basic terminology: Crates and Modules
+# 基本用詞：Crates 以及 Modules
 
-Rust has two distinct terms that relate to the module system: ‘crate’ and
-‘module’. A crate is synonymous with a ‘library’ or ‘package’ in other
-languages. Hence “Cargo” as the name of Rust’s package management tool: you
-ship your crates to others with Cargo. Crates can produce an executable or a
-library, depending on the project.
+Rust 有兩個獨立的詞和模組系統相關： `crate` 以及 `module`。crate 跟其他語言中的函式庫 (library) 和套件包 (package) 是同義詞。 
+因此我們用 Cargo 作為 rust 的套件管理工具：你會用貨櫃 (cargo) 把你的木箱 (crate) 運送到其他人那裡。 
+Crates 可以是可執行的，也可以是函式庫，這取決於專案。
 
-Each crate has an implicit *root module* that contains the code for that crate.
-You can then define a tree of sub-modules under that root module. Modules allow
-you to partition your code within the crate itself.
+每個 crate 都有隱含的 *root module*，用來包含該 crate 的程式。
+接著，你可以在該 root module 下定義一個子模組樹 (sub-modules tree)。
+模組讓你可以將你的程式碼依照 crate 分區。
 
-As an example, let’s make a *phrases* crate, which will give us various phrases
-in different languages. To keep things simple, we’ll stick to ‘greetings’ and
-‘farewells’ as two kinds of phrases, and use English and Japanese (日本語) as
-two languages for those phrases to be in. We’ll use this module layout:
+舉個例子，我們建立一個 *句子 (phrases)* crate，這可以給我們不同語言的幾個句子。
+為了讓事情簡單化，我們先使用 `greetings` 和 `farewells` 這兩種句子，並使用英文及日文這兩種語言來舉例。
+我們會有下面的 module layout：
+
 
 ```text
                                     +-----------+
@@ -43,19 +39,18 @@ two languages for those phrases to be in. We’ll use this module layout:
                                     +-----------+
 ```
 
-In this example, `phrases` is the name of our crate. All of the rest are
-modules.  You can see that they form a tree, branching out from the crate
-*root*, which is the root of the tree: `phrases` itself.
+在這個範例中，`phrases` 就是我們的 crate 的名字。剩下的東西就是模組。
+如你所見，他們形成了一棵樹，從 crate 作為 *根 (root)* 開始分岔出去。
 
-Now that we have a plan, let’s define these modules in code. To start,
-generate a new crate with Cargo:
+現在我們有個計畫，讓我們用程式碼定義這些模組吧。
+我們可以用 Cargo 來產生個新的 crate：
 
 ```bash
 $ cargo new phrases
 $ cd phrases
 ```
 
-If you remember, this generates a simple project for us:
+如果你記得的話，這會替我們產生個新的專案：
 
 ```bash
 $ tree .
@@ -67,13 +62,12 @@ $ tree .
 1 directory, 2 files
 ```
 
-`src/lib.rs` is our crate root, corresponding to the `phrases` in our diagram
-above.
+`src/lib.rs` 是我們 crate 的 root，對應到我們的圖中的 `phrases`。
 
-# Defining Modules
+# 定義模組
 
-To define each of our modules, we use the `mod` keyword. Let’s make our
-`src/lib.rs` look like this:
+要定義我們的每個模組，我們會使用 `mod` 這個關鍵字。讓我們建立我們的
+`src/lib.rs`：
 
 ```rust
 mod english {
@@ -93,9 +87,8 @@ mod japanese {
 }
 ```
 
-After the `mod` keyword, you give the name of the module. Module names follow
-the conventions for other Rust identifiers: `lower_snake_case`. The contents of
-each module are within curly braces (`{}`).
+在 `mod` 之後，你會給定模組的名字。模組名的規定會跟其他 Rust identifiers 相同： `lower_snake_case`。
+而模組的內容則用 curly braces (`{}`) 包住。
 
 Within a given `mod`, you can declare sub-`mod`s. We can refer to sub-modules
 with double-colon (`::`) notation: our four nested modules are
