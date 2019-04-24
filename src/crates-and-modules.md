@@ -1,27 +1,23 @@
-% Crates and Modules
+# Crates 和 Modules
 
-When a project starts getting large, it’s considered good software
-engineering practice to split it up into a bunch of smaller pieces, and then
-fit them together. It is also important to have a well-defined interface, so
-that some of your functionality is private, and some is public. To facilitate
-these kinds of things, Rust has a module system.
+當一個專案開始變大的時候，將它切小再把他們組裝在一起會被認為是個好的軟體工程作法。
+有個定義得很好的介面也很重要，這麼做的話你就可以將某些 functionality 區分成公開及私有的。
+為了滿足上述的需求，Rust 便提供了模組系統 (module system)。
 
-# Basic terminology: Crates and Modules
+# 基本用詞：Crates 以及 Modules
 
-Rust has two distinct terms that relate to the module system: ‘crate’ and
-‘module’. A crate is synonymous with a ‘library’ or ‘package’ in other
-languages. Hence “Cargo” as the name of Rust’s package management tool: you
-ship your crates to others with Cargo. Crates can produce an executable or a
-library, depending on the project.
+Rust 有兩個獨立的詞和模組系統相關： `crate` 以及 `module`。crate 跟其他語言中的函式庫 (library) 和套件包 (package) 是同義詞。 
+因此我們用 Cargo 作為 rust 的套件管理工具：你會用貨櫃 (cargo) 把你的木箱 (crate) 運送到其他人那裡。 
+Crates 可以是可執行的，也可以是函式庫，這取決於專案。
 
-Each crate has an implicit *root module* that contains the code for that crate.
-You can then define a tree of sub-modules under that root module. Modules allow
-you to partition your code within the crate itself.
+每個 crate 都有隱含的 *root module*，用來包含該 crate 的程式。
+接著，你可以在該 root module 下定義一個子模組樹 (sub-modules tree)。
+模組讓你可以將你的程式碼依照 crate 分區。
 
-As an example, let’s make a *phrases* crate, which will give us various phrases
-in different languages. To keep things simple, we’ll stick to ‘greetings’ and
-‘farewells’ as two kinds of phrases, and use English and Japanese (日本語) as
-two languages for those phrases to be in. We’ll use this module layout:
+舉個例子，我們建立一個 *句子 (phrases)* crate，這可以給我們不同語言的幾個句子。
+為了讓事情簡單化，我們先使用 `greetings` 和 `farewells` 這兩種句子，並使用英文及日文這兩種語言來舉例。
+我們會有下面的 module layout：
+
 
 ```text
                                     +-----------+
@@ -43,19 +39,18 @@ two languages for those phrases to be in. We’ll use this module layout:
                                     +-----------+
 ```
 
-In this example, `phrases` is the name of our crate. All of the rest are
-modules.  You can see that they form a tree, branching out from the crate
-*root*, which is the root of the tree: `phrases` itself.
+在這個範例中，`phrases` 就是我們的 crate 的名字。剩下的東西就是模組。
+如你所見，他們形成了一棵樹，從 crate 作為 *根 (root)* 開始分岔出去。
 
-Now that we have a plan, let’s define these modules in code. To start,
-generate a new crate with Cargo:
+現在我們有個計畫，讓我們用程式碼定義這些模組吧。
+我們可以用 Cargo 來產生個新的 crate：
 
 ```bash
 $ cargo new phrases
 $ cd phrases
 ```
 
-If you remember, this generates a simple project for us:
+如果你記得的話，這會替我們產生個新的專案：
 
 ```bash
 $ tree .
@@ -67,13 +62,12 @@ $ tree .
 1 directory, 2 files
 ```
 
-`src/lib.rs` is our crate root, corresponding to the `phrases` in our diagram
-above.
+`src/lib.rs` 是我們 crate 的 root，對應到我們的圖中的 `phrases`。
 
-# Defining Modules
+# 定義模組
 
-To define each of our modules, we use the `mod` keyword. Let’s make our
-`src/lib.rs` look like this:
+要定義我們的每個模組，我們會使用 `mod` 這個關鍵字。讓我們建立我們的
+`src/lib.rs`：
 
 ```rust
 mod english {
@@ -93,20 +87,16 @@ mod japanese {
 }
 ```
 
-After the `mod` keyword, you give the name of the module. Module names follow
-the conventions for other Rust identifiers: `lower_snake_case`. The contents of
-each module are within curly braces (`{}`).
+在 `mod` 之後，你會給定模組的名字。模組名的規定會跟其他 Rust identifiers 相同： `lower_snake_case`。
+而模組的內容則用 curly braces (`{}`) 包住。
 
-Within a given `mod`, you can declare sub-`mod`s. We can refer to sub-modules
-with double-colon (`::`) notation: our four nested modules are
-`english::greetings`, `english::farewells`, `japanese::greetings`, and
-`japanese::farewells`. Because these sub-modules are namespaced under their
-parent module, the names don’t conflict: `english::greetings` and
-`japanese::greetings` are distinct, even though their names are both
-`greetings`.
-
-Because this crate does not have a `main()` function, and is called `lib.rs`,
-Cargo will build this crate as a library:
+在給定的 `mod` 中，你會宣告子 `mod`。我們會將用雙冒號參照到子模組：
+我們的四個巢狀模組分別是 `english::greetings`、`english::farewells`、`japanese::greetings`，以及 `japanese::farewells`。
+因為這些子模組都隸屬於 (namespaced) 他們的父模組之下，名字便不會衝突到：
+即使 `english::greetings` 和 `japanese::greetings` 的名字都叫 `greetings`，但他們仍互相獨立。
+ 
+因為這個 crate 沒有 `main()` function，且被命名為 `lib.rs`，
+Cargo 會將它建成函式庫：
 
 ```bash
 $ cargo build
@@ -115,16 +105,16 @@ $ ls target/debug
 build  deps  examples  libphrases-a7448e02a0468eaa.rlib  native
 ```
 
-`libphrases-hash.rlib` is the compiled crate. Before we see how to use this
-crate from another crate, let’s break it up into multiple files.
+`libphrases-hash.rlib` 是個被編譯出來的 crate。在我們看要怎麼從別的 crate 來用這個
+crate 之前，讓我們把他切成幾個檔案。
 
-# Multiple file crates
+# 多檔 crates
 
-If each crate were just one file, these files would get very large. It’s often
-easier to split up crates into multiple files, and Rust supports this in two
-ways.
+如果每個 crate 都只是一個檔案的話，那那個檔案一定會變得非常巨大。
+所以我們通常會將 crate 切成多個檔案，而 rust 支援兩種方式。
 
-Instead of declaring a module like this:
+
+不像這樣宣告模組：
 
 ```rust,ignore
 mod english {
@@ -132,20 +122,17 @@ mod english {
 }
 ```
 
-We can instead declare our module like this:
+我們也可以像這樣軒高我們的模組：
 
 ```rust,ignore
 mod english;
 ```
 
-If we do that, Rust will expect to find either a `english.rs` file, or a
-`english/mod.rs` file with the contents of our module.
+如果我們這麼做的話，Rust 會預期專案中會有個叫做 `english.rs` 或是 `english/mod.rs` 的檔案。
 
-Note that in these files, you don’t need to re-declare the module: that’s
-already been done with the initial `mod` declaration.
+要注意的是，在這些檔案中，你不用再次宣告你的模組：我們已經在初始化 `mod` 時宣告過了。
 
-Using these two techniques, we can break up our crate into two directories and
-seven files:
+使用這兩中方法的話，我們可以將我們的 crate 切成兩個目錄、七個檔案：
 
 ```bash
 $ tree .
@@ -171,34 +158,34 @@ $ tree .
         └── native
 ```
 
-`src/lib.rs` is our crate root, and looks like this:
+`src/lib.rs` 是我們的 crate root，而且長得像這樣：
 
 ```rust,ignore
 mod english;
 mod japanese;
 ```
 
-These two declarations tell Rust to look for either `src/english.rs` and
-`src/japanese.rs`, or `src/english/mod.rs` and `src/japanese/mod.rs`, depending
-on our preference. In this case, because our modules have sub-modules, we’ve
-chosen the second. Both `src/english/mod.rs` and `src/japanese/mod.rs` look
-like this:
+這兩個宣告會叫 Rust 去找 `src/english.rs` 和`src/japanese.rs`，
+或是 `src/english/mod.rs` 和 `src/japanese/mod.rs`，取決於我們的喜好。
+
+在這個例子中，因為我們的這兩個模組各自有子模組，所以我們選擇第二種方式。
+
+`src/english/mod.rs` 和 `src/japanese/mod.rs` 都會長得像這樣：
 
 ```rust,ignore
 mod greetings;
 mod farewells;
 ```
 
-Again, these declarations tell Rust to look for either
-`src/english/greetings.rs` and `src/japanese/greetings.rs` or
-`src/english/farewells/mod.rs` and `src/japanese/farewells/mod.rs`. Because
-these sub-modules don’t have their own sub-modules, we’ve chosen to make them
-`src/english/greetings.rs` and `src/japanese/farewells.rs`. Whew!
+再一次地，這些宣告會叫 Rust 去找 `src/english/greetings.rs` 和 `src/japanese/greetings.rs`，
+或是 `src/english/farewells/mod.rs` 和 `src/japanese/farewells/mod.rs`。
+因為這兩個組子模組都沒有屬於他們的子模組了，我們可以直接放在
+`src/english/greetings.rs` 和 `src/japanese/farewells.rs`。呼～～！
 
-The contents of `src/english/greetings.rs` and `src/japanese/farewells.rs` are
-both empty at the moment. Let’s add some functions.
+`src/english/greetings.rs` 和 `src/japanese/farewells.rs` 的內容在此時都會是空的。
+我們來加一些函式吧：
 
-Put this in `src/english/greetings.rs`:
+把這個放在 `src/english/greetings.rs` 中：
 
 ```rust
 fn hello() -> String {
@@ -206,7 +193,7 @@ fn hello() -> String {
 }
 ```
 
-Put this in `src/english/farewells.rs`:
+把這個放在 `src/english/farewells.rs` 中：
 
 ```rust
 fn goodbye() -> String {
@@ -214,7 +201,7 @@ fn goodbye() -> String {
 }
 ```
 
-Put this in `src/japanese/greetings.rs`:
+把這個放在 `src/japanese/greetings.rs` 中：
 
 ```rust
 fn hello() -> String {
@@ -222,11 +209,11 @@ fn hello() -> String {
 }
 ```
 
-Of course, you can copy and paste this from this web page, or type
-something else. It’s not important that you actually put ‘konnichiwa’ to learn
-about the module system.
+當然，你可以從網頁上複製過去，或是打一些什麼別的。
+你是否真的把 ‘konnichiwa’ 放進檔案中沒很重要，
+有沒有這麼做你都還是可以學會模組系統。
 
-Put this in `src/japanese/farewells.rs`:
+把這個放在 `src/japanese/farewells.rs` 中：
 
 ```rust
 fn goodbye() -> String {
@@ -234,17 +221,15 @@ fn goodbye() -> String {
 }
 ```
 
-(This is ‘Sayōnara’, if you’re curious.)
+(如果你好奇的話，這個叫做 ‘Sayōnara’。)
 
-Now that we have some functionality in our crate, let’s try to use it from
-another crate.
+現在我們的 crate 有一些函式了，讓我們試著從另一個 crate 使用它吧。
 
-# Importing External Crates
+# 引入外部 Crates
 
-We have a library crate. Let’s make an executable crate that imports and uses
-our library.
+現在我們有了個函式庫 crate，讓我們引用他來建立一個可執行的 crate。
 
-Make a `src/main.rs` and put this in it (it won’t quite compile yet):
+建立一個 `src/main.rs` 並把下面這些程式碼放進去 (先不用編譯)：
 
 ```rust,ignore
 extern crate phrases;
@@ -258,10 +243,9 @@ fn main() {
 }
 ```
 
-The `extern crate` declaration tells Rust that we need to compile and link to
-the `phrases` crate. We can then use `phrases`’ modules in this one. As we
-mentioned earlier, you can use double colons to refer to sub-modules and the
-functions inside of them.
+`extern crate` 宣告會告訴 Rust 我們需要編譯並連結 (link) 到 `phrases` crate。
+接著我們就能裡面使用我們的 `phrases` 模組。
+如同我們先前有提到過的，你可以使用雙冒號來參照子模組中的 functions。
 
 (Note: when importing a crate that has dashes in its name "like-this", which is
 not a valid Rust identifier, it will be converted by changing the dashes to
