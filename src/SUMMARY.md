@@ -23,7 +23,7 @@
     * [字串](strings.md)
     * [泛型](generics.md)
     * [Traits](traits.md)
-    * [Drop](drop.md)
+    * [丟棄](drop.md)
     * [if let](if-let.md)
     * [Trait Objects](trait-objects.md)
     * [Closures](closures.md)
