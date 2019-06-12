@@ -178,17 +178,18 @@ zero-cost abstractions | 無成本抽象化                  |
 
 English 英文           | Traditional Chinese 正體中文  | Note 備註
 ------------           |-----------------------------  |----------
+address                |                               | 暫時譯為地址
 alignment              |                               |
 backtrace              |                               |
 bootstrap              |                               |
 build                  |                               | 名詞，例：create a "build"
 closures               |                               |
 commit                 |                               | git commit
-crates                 |                               |
+crates                 |                               | 有的譯本中翻譯為箱
 dependencies           |                               |
 destructuring let      |                               | 用於存取 tuple
 fully-strict           |                               |
-hash                   |                               |
+hash                   |                               | 有的譯本中翻譯為
 import                 |                               |
 linker                 |                               |
 linking                |                               |
@@ -203,7 +204,7 @@ prelude                |                               | 預先載入的函式�
 profiles               |                               |
 regression             |                               |
 repository             |                               |
-root                   |                               |
+root                   |                               | 有的譯本中翻譯為根
 shell                  |                               |
 slices                 |                               | 其他資料結構的參考
 tabs                   |                               |
