@@ -1,12 +1,9 @@
-% Drop
-
-Now that we’ve discussed traits, let’s talk about a particular trait provided
-by the Rust standard library, [`Drop`][drop]. The `Drop` trait provides a way
-to run some code when a value goes out of scope. For example:
+# Drop
+我們已經討論過 Trait 了。現在讓我們來談一個 Rust standard library 的特殊 Trait，[`Drop`][drop]。`Drop` 為程式執行時，如果值超出了有效範圍， 提供了一個方法。 例如︰
 
 [drop]: ../std/ops/trait.Drop.html
 
-```rust
+```rust=
 struct HasDrop;
 
 impl Drop for HasDrop {
@@ -18,20 +15,17 @@ impl Drop for HasDrop {
 fn main() {
     let x = HasDrop;
 
-    // do stuff
+    // 做些事
 
-} // x goes out of scope here
+} // x 超出了有效範圍
+
 ```
 
-When `x` goes out of scope at the end of `main()`, the code for `Drop` will
-run. `Drop` has one method, which is also called `drop()`. It takes a mutable
-reference to `self`.
+當程式跑到 `main()` 的結尾，`x` 就超出了有效範圍，此時程式會執行 Drop。`Drop` 只有一個方法，這方法也叫 `drop()`。 drop 會接收一個可變的 `self` 參照。
 
-That’s it! The mechanics of `Drop` are very simple, but there are some
-subtleties. For example, values are dropped in the opposite order they are
-declared. Here’s another example:
+就這樣! `Drop` 的機制非常簡單，但是有些幽微之處。例如，值會依照他們被宣告的相反順序被丟棄 (dropped)。以下是範例︰
 
-```rust
+```rust=
 struct Firework {
     strength: i32,
 }
@@ -48,23 +42,18 @@ fn main() {
 }
 ```
 
-This will output:
+這會輸出︰
+
 
 ```text
 BOOM times 100!!!
 BOOM times 1!!!
 ```
 
-The TNT goes off before the firecracker does, because it was declared
-afterwards. Last in, first out.
+因為 tnt 變數是比較晚被宣告的，所以 tnt 會比 firecraker 變數提早離開有效範圍。先進後出 (Last in, first out)。
 
-So what is `Drop` good for? Generally, `Drop` is used to clean up any resources
-associated with a `struct`. For example, the [`Arc<T>` type][arc] is a
-reference-counted type. When `Drop` is called, it will decrement the reference
-count, and if the total number of references is zero, will clean up the
-underlying value.
+所以 `Drop` 有什樣的好處呢？一般來說，`Drop` 被用來清理與一個 struct 有關的任何資源。例如，[`Arc<T>` type][arc] 是一個參照計數型別，當 Drop 被呼叫時，它會減少參照的數目。當參照總數等於 0 時，它便會把底下的值清除。
 
 [arc]: ../std/sync/struct.Arc.html
-
 
 > *commit 024aa9a*
